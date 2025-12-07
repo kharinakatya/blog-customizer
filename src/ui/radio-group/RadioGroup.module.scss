@@ -2,6 +2,8 @@
 	display: inline-flex;
 	box-sizing: border-box;
 	max-width: fit-content;
+	margin-top: 4px;
+	margin-bottom: 50px;
 	border: 1px solid #000000;
 }
 
@@ -31,8 +33,6 @@
 	border-right: 1px solid #000000;
 	cursor: pointer;
 }
-
-/* Убираем бордер у последнего в radiogroup, чтобы не было двойного бордера */
 
 .label:hover {
 	background-color: #ffedab;
