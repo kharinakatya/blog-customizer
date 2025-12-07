@@ -4,7 +4,6 @@ import clsx from 'clsx';
 import { OptionType } from 'src/constants/articleProps';
 import { Text } from 'src/ui/text';
 import arrowDown from 'src/images/arrow-down.svg';
-import { Option } from './Option';
 import { isFontFamilyClass } from './helpers/isFontFamilyClass';
 import { useEnterSubmit } from './hooks/useEnterSubmit';
 import { useOutsideClickClose } from './hooks/useOutsideClickClose';
@@ -26,6 +25,8 @@ export const Select = (props: SelectProps) => {
 	const rootRef = useRef<HTMLDivElement>(null);
 	const placeholderRef = useRef<HTMLDivElement>(null);
 	const optionClassName = selected?.optionClassName ?? '';
+
+	const status = 'default';
 
 	useOutsideClickClose({
 		isOpen,
@@ -62,6 +63,7 @@ export const Select = (props: SelectProps) => {
 				data-is-active={isOpen}
 				data-testid='selectWrapper'>
 				<img src={arrowDown} alt='иконка стрелочки' className={styles.arrow} />
+
 				<div
 					className={clsx(
 						styles.placeholder,
@@ -82,16 +84,27 @@ export const Select = (props: SelectProps) => {
 						{selected?.title || placeholder}
 					</Text>
 				</div>
+
 				{isOpen && (
-					<ul className={styles.select} data-testid='selectDropdown'>
+					<ul
+						className={styles.select}
+						data-testid='selectDropdown'
+						role='listbox'>
 						{options
 							.filter((option) => selected?.value !== option.value)
 							.map((option) => (
-								<Option
+								<li
 									key={option.value}
-									option={option}
-									onClick={() => handleOptionClick(option)}
-								/>
+									role='option'
+									aria-selected={selected?.value === option.value}
+									className={clsx(
+										styles.option,
+										option.optionClassName &&
+											(styles as Record<string, string>)[option.optionClassName]
+									)}
+									onClick={() => handleOptionClick(option)}>
+									<span className={styles['option-title']}>{option.title}</span>
+								</li>
 							))}
 					</ul>
 				)}
