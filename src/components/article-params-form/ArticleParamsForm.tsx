@@ -1,16 +1,3 @@
-<<<<<<< HEAD
-import { ArrowButton } from 'src/ui/arrow-button';
-import { Button } from 'src/ui/button';
-
-import styles from './ArticleParamsForm.module.scss';
-
-export const ArticleParamsForm = () => {
-	return (
-		<>
-			<ArrowButton isOpen={false} onClick={() => {}} />
-			<aside className={styles.container}>
-				<form className={styles.form}>
-=======
 import clsx from 'clsx';
 import React, { useEffect, useRef, useState } from 'react';
 import { ArrowButton } from 'src/ui/arrow-button';
@@ -284,7 +271,6 @@ export const ArticleParamsForm: React.FC<Props> = ({
 
 					<Separator />
 
->>>>>>> cb3d7b63f234c0e1e03c7ba9d971d2ce331ba561
 					<div className={styles.bottomContainer}>
 						<Button title='Сбросить' htmlType='reset' type='clear' />
 						<Button title='Применить' htmlType='submit' type='apply' />

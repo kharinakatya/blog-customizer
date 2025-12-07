@@ -1,9 +1,5 @@
 import { createRoot } from 'react-dom/client';
-<<<<<<< HEAD
-import { StrictMode, CSSProperties } from 'react';
-=======
 import { StrictMode, CSSProperties, useState } from 'react';
->>>>>>> cb3d7b63f234c0e1e03c7ba9d971d2ce331ba561
 import clsx from 'clsx';
 
 import { Article } from './components/article/Article';
@@ -17,8 +13,6 @@ const domNode = document.getElementById('root') as HTMLDivElement;
 const root = createRoot(domNode);
 
 const App = () => {
-<<<<<<< HEAD
-=======
 	const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 	const [articleParams, setArticleParams] = useState({
 		fontFamily: defaultArticleState.fontFamilyOption.value,
@@ -35,22 +29,11 @@ const App = () => {
 		setArticleParams(params);
 	};
 
->>>>>>> cb3d7b63f234c0e1e03c7ba9d971d2ce331ba561
 	return (
 		<main
 			className={clsx(styles.main)}
 			style={
 				{
-<<<<<<< HEAD
-					'--font-family': defaultArticleState.fontFamilyOption.value,
-					'--font-size': defaultArticleState.fontSizeOption.value,
-					'--font-color': defaultArticleState.fontColor.value,
-					'--container-width': defaultArticleState.contentWidth.value,
-					'--bg-color': defaultArticleState.backgroundColor.value,
-				} as CSSProperties
-			}>
-			<ArticleParamsForm />
-=======
 					'--font-family': articleParams.fontFamily,
 					'--font-size': articleParams.fontSize,
 					'--font-color': articleParams.fontColor,
@@ -65,7 +48,6 @@ const App = () => {
 				onApply={handleApplyParams}
 				initialParams={articleParams}
 			/>
->>>>>>> cb3d7b63f234c0e1e03c7ba9d971d2ce331ba561
 			<Article />
 		</main>
 	);
