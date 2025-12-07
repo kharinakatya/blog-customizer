@@ -1,6 +1,10 @@
 .container {
 	position: fixed;
 	top: 31px;
+<<<<<<< HEAD
+=======
+	z-index: 50;
+>>>>>>> cb3d7b63f234c0e1e03c7ba9d971d2ce331ba561
 	display: flex;
 	flex-shrink: 0;
 	justify-content: center;
@@ -22,7 +26,11 @@
 }
 
 .container_open {
+<<<<<<< HEAD
 	transform: translate(616px);
+=======
+	transform: translateX(616px);
+>>>>>>> cb3d7b63f234c0e1e03c7ba9d971d2ce331ba561
 }
 
 .arrow {

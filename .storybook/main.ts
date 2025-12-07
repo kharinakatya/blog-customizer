@@ -4,12 +4,21 @@ const path = require('path');
 const config: StorybookConfig = {
 	stories: ['../src/**/*.mdx', '../src/**/*.stories.@(js|jsx|mjs|ts|tsx)'],
 	addons: [
+<<<<<<< HEAD
         '@storybook/addon-links',
         '@storybook/addon-essentials',
         '@storybook/addon-onboarding',
         '@storybook/addon-interactions',
         '@storybook/addon-styling-webpack',
         {
+=======
+		'@storybook/addon-links',
+		'@storybook/addon-essentials',
+		'@storybook/addon-onboarding',
+		'@storybook/addon-interactions',
+		'@storybook/addon-styling-webpack',
+		{
+>>>>>>> cb3d7b63f234c0e1e03c7ba9d971d2ce331ba561
 			name: '@storybook/addon-styling-webpack',
 
 			options: {
@@ -60,8 +69,13 @@ const config: StorybookConfig = {
 				],
 			},
 		},
+<<<<<<< HEAD
         '@storybook/addon-webpack5-compiler-swc'
     ],
+=======
+		'@storybook/addon-webpack5-compiler-swc',
+	],
+>>>>>>> cb3d7b63f234c0e1e03c7ba9d971d2ce331ba561
 	webpackFinal: async (config) => {
 		if (config?.resolve?.alias) {
 			config.resolve.alias = {

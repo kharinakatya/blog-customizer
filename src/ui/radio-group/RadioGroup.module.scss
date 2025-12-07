@@ -2,6 +2,11 @@
 	display: inline-flex;
 	box-sizing: border-box;
 	max-width: fit-content;
+<<<<<<< HEAD
+=======
+	margin-top: 4px;
+	margin-bottom: 50px;
+>>>>>>> cb3d7b63f234c0e1e03c7ba9d971d2ce331ba561
 	border: 1px solid #000000;
 }
 
@@ -32,8 +37,11 @@
 	cursor: pointer;
 }
 
+<<<<<<< HEAD
 /* Убираем бордер у последнего в radiogroup, чтобы не было двойного бордера */
 
+=======
+>>>>>>> cb3d7b63f234c0e1e03c7ba9d971d2ce331ba561
 .label:hover {
 	background-color: #ffedab;
 }

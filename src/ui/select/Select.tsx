@@ -4,7 +4,10 @@ import clsx from 'clsx';
 import { OptionType } from 'src/constants/articleProps';
 import { Text } from 'src/ui/text';
 import arrowDown from 'src/images/arrow-down.svg';
+<<<<<<< HEAD
 import { Option } from './Option';
+=======
+>>>>>>> cb3d7b63f234c0e1e03c7ba9d971d2ce331ba561
 import { isFontFamilyClass } from './helpers/isFontFamilyClass';
 import { useEnterSubmit } from './hooks/useEnterSubmit';
 import { useOutsideClickClose } from './hooks/useOutsideClickClose';
@@ -27,6 +30,11 @@ export const Select = (props: SelectProps) => {
 	const placeholderRef = useRef<HTMLDivElement>(null);
 	const optionClassName = selected?.optionClassName ?? '';
 
+<<<<<<< HEAD
+=======
+	const status = 'default';
+
+>>>>>>> cb3d7b63f234c0e1e03c7ba9d971d2ce331ba561
 	useOutsideClickClose({
 		isOpen,
 		rootRef,
@@ -62,6 +70,10 @@ export const Select = (props: SelectProps) => {
 				data-is-active={isOpen}
 				data-testid='selectWrapper'>
 				<img src={arrowDown} alt='иконка стрелочки' className={styles.arrow} />
+<<<<<<< HEAD
+=======
+
+>>>>>>> cb3d7b63f234c0e1e03c7ba9d971d2ce331ba561
 				<div
 					className={clsx(
 						styles.placeholder,
@@ -82,6 +94,7 @@ export const Select = (props: SelectProps) => {
 						{selected?.title || placeholder}
 					</Text>
 				</div>
+<<<<<<< HEAD
 				{isOpen && (
 					<ul className={styles.select} data-testid='selectDropdown'>
 						{options
@@ -92,6 +105,29 @@ export const Select = (props: SelectProps) => {
 									option={option}
 									onClick={() => handleOptionClick(option)}
 								/>
+=======
+
+				{isOpen && (
+					<ul
+						className={styles.select}
+						data-testid='selectDropdown'
+						role='listbox'>
+						{options
+							.filter((option) => selected?.value !== option.value)
+							.map((option) => (
+								<li
+									key={option.value}
+									role='option'
+									aria-selected={selected?.value === option.value}
+									className={clsx(
+										styles.option,
+										option.optionClassName &&
+											(styles as Record<string, string>)[option.optionClassName]
+									)}
+									onClick={() => handleOptionClick(option)}>
+									<span className={styles['option-title']}>{option.title}</span>
+								</li>
+>>>>>>> cb3d7b63f234c0e1e03c7ba9d971d2ce331ba561
 							))}
 					</ul>
 				)}

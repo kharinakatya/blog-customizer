@@ -1,6 +1,10 @@
 .container {
 	position: fixed;
 	left: 0;
+<<<<<<< HEAD
+=======
+	z-index: 40;
+>>>>>>> cb3d7b63f234c0e1e03c7ba9d971d2ce331ba561
 	width: 616px;
 	height: 100%;
 	overflow: scroll;
@@ -9,7 +13,13 @@
 }
 
 .container_open {
+<<<<<<< HEAD
 	transform: translate(0);
+=======
+	visibility: visible;
+	transform: translateX(0);
+	pointer-events: auto;
+>>>>>>> cb3d7b63f234c0e1e03c7ba9d971d2ce331ba561
 }
 
 .form {
@@ -30,4 +40,7 @@
 	justify-content: space-between;
 	margin-top: auto;
 }
+<<<<<<< HEAD
 
+=======
+>>>>>>> cb3d7b63f234c0e1e03c7ba9d971d2ce331ba561
