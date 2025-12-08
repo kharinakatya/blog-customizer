@@ -5,7 +5,17 @@ import { Button } from 'src/ui/button';
 import { Select } from 'src/ui/select';
 import { RadioGroup } from 'src/ui/radio-group';
 import { Separator } from 'src/ui/separator';
-import { OptionType, defaultArticleState } from 'src/constants/articleProps';
+import { Text } from 'src/ui/text';
+import {
+	fontFamilyOptions,
+	fontColors,
+	backgroundColors,
+	contentWidthArr,
+	fontSizeOptions,
+	defaultArticleState,
+	OptionType,
+	FontFamiliesClasses,
+} from 'src/constants/articleProps';
 
 import styles from './ArticleParamsForm.module.scss';
 
@@ -20,141 +30,32 @@ type Props = {
 		backgroundColor: string;
 		contentWidth: string;
 	}) => void;
-	initialParams?: {
-		fontFamily: string;
-		fontSize: string;
-		fontColor: string;
-		backgroundColor: string;
-		contentWidth: string;
-	};
 };
-
-const fontFamilyOptions: OptionType[] = [
-	{ value: 'Arial', title: 'Arial', className: '', optionClassName: '' },
-	{
-		value: 'Times New Roman',
-		title: 'Times New Roman',
-		className: '',
-		optionClassName: '',
-	},
-	{ value: 'Verdana', title: 'Verdana', className: '', optionClassName: '' },
-	{ value: 'Georgia', title: 'Georgia', className: '', optionClassName: '' },
-];
-
-const fontSizeOptions: OptionType[] = [
-	{ value: '14px', title: '14px', className: '', optionClassName: '' },
-	{ value: '16px', title: '16px', className: '', optionClassName: '' },
-	{ value: '18px', title: '18px', className: '', optionClassName: '' },
-	{ value: '20px', title: '20px', className: '', optionClassName: '' },
-];
-
-const contentWidthOptions: OptionType[] = [
-	{ value: '100%', title: '100%', className: '', optionClassName: '' },
-	{ value: '80%', title: '80%', className: '', optionClassName: '' },
-	{ value: '60%', title: '60%', className: '', optionClassName: '' },
-	{ value: '40%', title: '40%', className: '', optionClassName: '' },
-];
-
-const colorOptions: OptionType[] = [
-	{
-		value: '#000000',
-		title: 'Чёрный',
-		className: '',
-		optionClassName: 'option-black',
-	},
-	{
-		value: '#ffffff',
-		title: 'Белый',
-		className: '',
-		optionClassName: 'option-white',
-	},
-	{
-		value: '#c4c4c4',
-		title: 'Серый',
-		className: '',
-		optionClassName: 'option-gray',
-	},
-	{
-		value: '#feafe8',
-		title: 'Розовый',
-		className: '',
-		optionClassName: 'option-pink',
-	},
-	{
-		value: '#fd24af',
-		title: 'Фуксия',
-		className: '',
-		optionClassName: 'option-fuchsia',
-	},
-	{
-		value: '#ffc802',
-		title: 'Жёлтый',
-		className: '',
-		optionClassName: 'option-yellow',
-	},
-	{
-		value: '#80d994',
-		title: 'Зелёный',
-		className: '',
-		optionClassName: 'option-green',
-	},
-	{
-		value: '#6fc1fd',
-		title: 'Синий',
-		className: '',
-		optionClassName: 'option-blue',
-	},
-	{
-		value: '#5f0dee',
-		title: 'Фиолетовый',
-		className: '',
-		optionClassName: 'option-purple',
-	},
-];
 
 export const ArticleParamsForm: React.FC<Props> = ({
 	isOpen,
 	onToggle,
 	onClose,
 	onApply,
-	initialParams = {
-		fontFamily: 'Arial',
-		fontSize: '16px',
-		fontColor: '#000000',
-		backgroundColor: '#ffffff',
-		contentWidth: '100%',
-	},
 }) => {
 	const asideRef = useRef<HTMLElement | null>(null);
 
 	const [selectedFontColorOption, setSelectedFontColorOption] =
-		useState<OptionType>(
-			colorOptions.find((option) => option.value === initialParams.fontColor) ||
-				colorOptions[0]
-		);
+		useState<OptionType>(defaultArticleState.fontColor);
 	const [selectedBackgroundColorOption, setSelectedBackgroundColorOption] =
-		useState<OptionType>(
-			colorOptions.find(
-				(option) => option.value === initialParams.backgroundColor
-			) || colorOptions[1]
-		);
+		useState<OptionType>(defaultArticleState.backgroundColor);
 
-	const [fontFamily, setFontFamily] = useState<OptionType>(() => {
-		return (
-			fontFamilyOptions.find((opt) => opt.value === initialParams.fontFamily) ||
-			fontFamilyOptions[0]
-		);
-	});
+	const [fontFamily, setFontFamily] = useState<OptionType>(
+		defaultArticleState.fontFamilyOption
+	);
 
-	const [contentWidth, setContentWidth] = useState<OptionType>(() => {
-		return (
-			contentWidthOptions.find(
-				(opt) => opt.value === initialParams.contentWidth
-			) || contentWidthOptions[0]
-		);
-	});
+	const [contentWidth, setContentWidth] = useState<OptionType>(
+		defaultArticleState.contentWidth
+	);
 
-	const [fontSize, setFontSize] = useState(initialParams.fontSize);
+	const [fontSize, setFontSize] = useState<string>(
+		defaultArticleState.fontSizeOption.value
+	);
 
 	useEffect(() => {
 		if (!isOpen) return;
@@ -218,9 +119,25 @@ export const ArticleParamsForm: React.FC<Props> = ({
 					className={styles.form}
 					onSubmit={handleSubmit}
 					onReset={handleReset}>
+					<header className={styles.header}>
+						<Text
+							as='h2'
+							size={31}
+							weight={800}
+							uppercase={true}
+							align='left'
+							family={
+								(fontFamily.className as FontFamiliesClasses | undefined) ??
+								'open-sans'
+							}
+							dynamicLite>
+							Задайте параметры
+						</Text>
+					</header>
+
 					<div className={styles.field}>
-						<label>Шрифт:</label>
 						<Select
+							title='Шрифт'
 							selected={fontFamily}
 							options={fontFamilyOptions}
 							placeholder='Выберите шрифт'
@@ -229,20 +146,19 @@ export const ArticleParamsForm: React.FC<Props> = ({
 					</div>
 
 					<div className={styles.field}>
-						<label>Размер шрифта:</label>
 						<RadioGroup
 							name='fontSize'
 							options={fontSizeOptions}
 							selected={selectedFontSizeOption}
 							onChange={(option: OptionType) => setFontSize(option.value)}
-							title=''
+							title='Размер шрифта'
 						/>
 					</div>
 
 					<div className={styles.field}>
-						<label>Цвет текста:</label>
 						<Select
-							options={colorOptions}
+							title='Цвет текста'
+							options={fontColors}
 							selected={selectedFontColorOption}
 							onChange={setSelectedFontColorOption}
 							placeholder='Выберите цвет'
@@ -250,9 +166,9 @@ export const ArticleParamsForm: React.FC<Props> = ({
 					</div>
 
 					<div className={styles.field}>
-						<label>Цвет фона:</label>
 						<Select
-							options={colorOptions}
+							title='Цвет фона'
+							options={backgroundColors}
 							selected={selectedBackgroundColorOption}
 							onChange={setSelectedBackgroundColorOption}
 							placeholder='Выберите цвет'
@@ -260,10 +176,10 @@ export const ArticleParamsForm: React.FC<Props> = ({
 					</div>
 
 					<div className={styles.field}>
-						<label>Ширина:</label>
 						<Select
+							title='Ширина'
 							selected={contentWidth}
-							options={contentWidthOptions}
+							options={contentWidthArr}
 							placeholder='Выберите ширину'
 							onChange={setContentWidth}
 						/>

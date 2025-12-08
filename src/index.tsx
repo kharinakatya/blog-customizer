@@ -46,7 +46,6 @@ const App = () => {
 				onToggle={toggleSidebar}
 				onClose={closeSidebar}
 				onApply={handleApplyParams}
-				initialParams={articleParams}
 			/>
 			<Article />
 		</main>
