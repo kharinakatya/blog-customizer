@@ -6,6 +6,7 @@
 	display: flex;
 	flex-direction: column;
 	row-gap: 4px;
+	padding-top: 50px;
 }
 
 .arrow {
@@ -69,7 +70,7 @@
 	height: 30px;
 	padding: 15px 17px;
 	background-color: rgb(255 255 255 / 100%);
-	border: 1px;
+	border: none;
 	cursor: pointer;
 }
 

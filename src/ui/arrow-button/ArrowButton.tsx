@@ -2,8 +2,8 @@ import arrow from 'src/images/arrow.svg';
 
 import styles from './ArrowButton.module.scss';
 import clsx from 'clsx';
+import React from 'react';
 
-/** Функция для обработки открытия/закрытия формы */
 export type OnClick = () => void;
 
 type ArrowButtonProps = {
@@ -11,20 +11,31 @@ type ArrowButtonProps = {
 	onClick: OnClick;
 };
 
-export const ArrowButton = ({ isOpen, onClick }: ArrowButtonProps) => {
+export const ArrowButton: React.FC<ArrowButtonProps> = ({
+	isOpen,
+	onClick,
+}) => {
+	const handleKeyDown = (e: React.KeyboardEvent) => {
+		if (e.key === 'Enter' || e.key === ' ') {
+			e.preventDefault();
+			onClick();
+		}
+	};
+
 	return (
-		/* Не забываем указаывать role и aria-label атрибуты для интерактивных элементов */
-		<div
-			role='button'
+		<button
+			type='button'
+			aria-expanded={isOpen}
 			aria-label='Открыть/Закрыть форму параметров статьи'
-			tabIndex={0}
 			className={clsx(styles.container, { [styles.container_open]: isOpen })}
-			onClick={onClick}>
+			onClick={onClick}
+			onKeyDown={handleKeyDown}>
 			<img
 				src={arrow}
 				alt='иконка стрелочки'
 				className={clsx(styles.arrow, { [styles.arrow_open]: isOpen })}
+				aria-hidden
 			/>
-		</div>
+		</button>
 	);
 };
