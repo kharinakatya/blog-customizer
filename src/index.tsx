@@ -13,7 +13,6 @@ const domNode = document.getElementById('root') as HTMLDivElement;
 const root = createRoot(domNode);
 
 const App = () => {
-	const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 	const [articleParams, setArticleParams] = useState({
 		fontFamily: defaultArticleState.fontFamilyOption.value,
 		fontSize: defaultArticleState.fontSizeOption.value,
@@ -21,13 +20,6 @@ const App = () => {
 		backgroundColor: defaultArticleState.backgroundColor.value,
 		contentWidth: defaultArticleState.contentWidth.value,
 	});
-
-	const toggleSidebar = () => setIsSidebarOpen((v) => !v);
-	const closeSidebar = () => setIsSidebarOpen(false);
-
-	const handleApplyParams = (params: typeof articleParams) => {
-		setArticleParams(params);
-	};
 
 	return (
 		<main
@@ -41,12 +33,7 @@ const App = () => {
 					'--bg-color': articleParams.backgroundColor,
 				} as CSSProperties
 			}>
-			<ArticleParamsForm
-				isOpen={isSidebarOpen}
-				onToggle={toggleSidebar}
-				onClose={closeSidebar}
-				onApply={handleApplyParams}
-			/>
+			<ArticleParamsForm setArticleParams={setArticleParams} />
 			<Article />
 		</main>
 	);

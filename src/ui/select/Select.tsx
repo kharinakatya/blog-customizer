@@ -48,6 +48,9 @@ export const Select = (props: SelectProps) => {
 		setIsOpen((isOpen) => !isOpen);
 	};
 
+	const resolveModuleClass = (cls?: string | null) =>
+		cls ? (styles as Record<string, string>)[cls] ?? cls : undefined;
+
 	return (
 		<div className={styles.container}>
 			{title && (
@@ -67,7 +70,7 @@ export const Select = (props: SelectProps) => {
 				<div
 					className={clsx(
 						styles.placeholder,
-						(styles as Record<string, string>)[optionClassName]
+						resolveModuleClass(optionClassName)
 					)}
 					data-status={status}
 					data-selected={!!selected?.value}
@@ -92,20 +95,29 @@ export const Select = (props: SelectProps) => {
 						role='listbox'>
 						{options
 							.filter((option) => selected?.value !== option.value)
-							.map((option) => (
-								<li
-									key={option.value}
-									role='option'
-									aria-selected={selected?.value === option.value}
-									className={clsx(
-										styles.option,
-										option.optionClassName &&
-											(styles as Record<string, string>)[option.optionClassName]
-									)}
-									onClick={() => handleOptionClick(option)}>
-									<span className={styles['option-title']}>{option.title}</span>
-								</li>
-							))}
+							.map((option) => {
+								const optionStyleClass = resolveModuleClass(
+									option.optionClassName
+								);
+								const fontFamilyClass = isFontFamilyClass(option.className)
+									? option.className
+									: undefined;
+
+								return (
+									<li
+										key={option.value}
+										role='option'
+										aria-selected={selected?.value === option.value}
+										className={clsx(styles.option, optionStyleClass)}
+										onClick={() => handleOptionClick(option)}>
+										<span className={styles['option-title']}>
+											<Text family={fontFamilyClass} as='span'>
+												{option.title}
+											</Text>
+										</span>
+									</li>
+								);
+							})}
 					</ul>
 				)}
 			</div>

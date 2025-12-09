@@ -19,26 +19,24 @@ import {
 
 import styles from './ArticleParamsForm.module.scss';
 
-type Props = {
-	isOpen: boolean;
-	onToggle: () => void;
-	onClose: () => void;
-	onApply: (params: {
-		fontFamily: string;
-		fontSize: string;
-		fontColor: string;
-		backgroundColor: string;
-		contentWidth: string;
-	}) => void;
+type StyleParams = {
+	fontFamily: string;
+	fontSize: string;
+	fontColor: string;
+	backgroundColor: string;
+	contentWidth: string;
 };
 
-export const ArticleParamsForm: React.FC<Props> = ({
-	isOpen,
-	onToggle,
-	onClose,
-	onApply,
-}) => {
+type Props = {
+	setArticleParams: React.Dispatch<React.SetStateAction<StyleParams>>;
+};
+
+export const ArticleParamsForm: React.FC<Props> = ({ setArticleParams }) => {
 	const asideRef = useRef<HTMLElement | null>(null);
+
+	const [isOpen, setIsOpen] = useState<boolean>(false);
+	const toggleSidebar = () => setIsOpen((v) => !v);
+	const closeSidebar = () => setIsOpen(false);
 
 	const [selectedFontColorOption, setSelectedFontColorOption] =
 		useState<OptionType>(defaultArticleState.fontColor);
@@ -57,30 +55,35 @@ export const ArticleParamsForm: React.FC<Props> = ({
 		defaultArticleState.fontSizeOption.value
 	);
 
+	const fontFamilyOptionsWithOptionClass = fontFamilyOptions.map((opt) => ({
+		...opt,
+		optionClassName: (opt.className as FontFamiliesClasses) ?? opt.className,
+	}));
+
 	useEffect(() => {
 		if (!isOpen) return;
 
 		const handleOutside = (e: MouseEvent) => {
 			const target = e.target as Node | null;
 			if (asideRef.current && !asideRef.current.contains(target)) {
-				onClose();
+				closeSidebar();
 			}
 		};
 
 		document.addEventListener('mousedown', handleOutside);
 		return () => document.removeEventListener('mousedown', handleOutside);
-	}, [isOpen, onClose]);
+	}, [isOpen]);
 
 	const handleSubmit = (e: React.FormEvent) => {
 		e.preventDefault();
-		onApply({
+		setArticleParams({
 			fontSize,
 			fontColor: selectedFontColorOption.value,
 			backgroundColor: selectedBackgroundColorOption.value,
 			fontFamily: fontFamily.value,
 			contentWidth: contentWidth.value,
 		});
-		onClose();
+		closeSidebar();
 	};
 
 	const handleReset = (e: React.FormEvent) => {
@@ -92,7 +95,7 @@ export const ArticleParamsForm: React.FC<Props> = ({
 		setFontSize(defaultArticleState.fontSizeOption.value);
 		setContentWidth(defaultArticleState.contentWidth);
 
-		onApply({
+		setArticleParams({
 			fontFamily: defaultArticleState.fontFamilyOption.value,
 			fontSize: defaultArticleState.fontSizeOption.value,
 			fontColor: defaultArticleState.fontColor.value,
@@ -100,7 +103,7 @@ export const ArticleParamsForm: React.FC<Props> = ({
 			contentWidth: defaultArticleState.contentWidth.value,
 		});
 
-		onClose();
+		closeSidebar();
 	};
 
 	const selectedFontSizeOption =
@@ -109,9 +112,10 @@ export const ArticleParamsForm: React.FC<Props> = ({
 
 	return (
 		<>
-			<ArrowButton isOpen={isOpen} onClick={onToggle} />
+			<ArrowButton isOpen={isOpen} onClick={toggleSidebar} />
+
 			<aside
-				ref={asideRef as any}
+				ref={asideRef}
 				className={clsx(styles.container, { [styles.container_open]: isOpen })}
 				aria-hidden={!isOpen}
 				data-open={isOpen}>
@@ -139,7 +143,7 @@ export const ArticleParamsForm: React.FC<Props> = ({
 						<Select
 							title='Шрифт'
 							selected={fontFamily}
-							options={fontFamilyOptions}
+							options={fontFamilyOptionsWithOptionClass}
 							placeholder='Выберите шрифт'
 							onChange={setFontFamily}
 						/>
